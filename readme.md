@@ -81,27 +81,27 @@ Server: 221 Bye
 
 #### Diagram
 ```mermaid
-sequenceDiagram
-    participant Client
-    participant Server
+sequenceDiagram;
+    participant Client;
+    participant Server;
 
-    Client->>Server: HELO example.com
-    Server-->>Client: 250 Hello example.com
+    Client->>Server: HELO example.com;
+    Server-->>Client: 250 Hello example.com;
 
-    Client->>Server: MAIL FROM:<sender@example.com>
-    Server-->>Client: 250 OK
+    Client->>Server: MAIL FROM:<sender@example.com>;
+    Server-->>Client: 250 OK;
 
-    Client->>Server: RCPT TO:<recipient@example.com>
-    Server-->>Client: 250 OK
+    Client->>Server: RCPT TO:<recipient@example.com>;
+    Server-->>Client: 250 OK;
 
-    Client->>Server: DATA
-    Server-->>Client: 354 Start mail input; end with CRLF.CRLF
+    Client->>Server: DATA;
+    Server-->>Client: 354 Start mail input; end with <CR><LF>.<CR><LF>;
 
-    Client->>Server: Subject: Test Email<br>This is a test email.<br>.
-    Server-->>Client: 250 OK
+    Client->>Server: Subject: Test Email<br>This is a test email.<br>.;
+    Server-->>Client: 250 OK;
 
-    Client->>Server: QUIT
-    Server-->>Client: 221 Bye
+    Client->>Server: QUIT;
+    Server-->>Client: 221 Bye;
 ```
 
 This diagram illustrates the sequence of commands and responses in a typical SMTP session.

@@ -95,7 +95,7 @@ sequenceDiagram
     Server-->>Client: 250 OK
 
     Client->>Server: DATA
-    Server-->>Client: 354 Start mail input; end with <CR><LF>.<CR><LF>
+    Server-->>Client: 354 Start mail input; end with CRLF.CRLF
 
     Client->>Server: Subject: Test Email<br>This is a test email.<br>.
     Server-->>Client: 250 OK

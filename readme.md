@@ -1,107 +1,181 @@
-Here is a detailed note on SMTP along with a diagram that can be rendered in GitHub using Markdown:
+Sure, here is the updated content with LaTeX formatting for mathematical expressions:
 
-### Simple Mail Transfer Protocol (SMTP)
+### **Support Vector Machine (SVM)**
 
-#### Overview
-SMTP (Simple Mail Transfer Protocol) is an Internet standard protocol used for the transmission of emails across IP networks. It is a protocol used to send, receive, and relay outgoing mail between email senders and receivers.
+---
 
-#### Key Features
-- **Connection-Oriented**: SMTP establishes a connection between the sender and receiver before transmitting the email.
-- **Text-Based Protocol**: SMTP commands and responses are text-based, making it easy to read and debug.
-- **Push Protocol**: SMTP is a push protocol, meaning it pushes the email from the client to the server.
+### **Definition**  
+Support Vector Machine (SVM) is a supervised machine learning algorithm used for **classification** and **regression** tasks. It is effective for solving linear and non-linear problems by transforming data into higher dimensions where it is linearly separable.
 
-#### SMTP Process
-1. **Client Initiation**: The email client (sender) initiates a connection to the SMTP server.
-2. **Handshake**: The client and server perform a handshake to establish a connection.
-3. **Mail Transfer**: The client sends the email data to the server using SMTP commands.
-4. **Server Response**: The server processes the email and responds with status codes indicating success or failure.
-5. **Connection Termination**: The connection is terminated after the email is successfully sent.
+---
 
-#### SMTP Commands
-- **HELO/EHLO**: Initiates the conversation between the client and server. EHLO is the extended version of HELO.
-- **MAIL FROM**: Specifies the sender's email address.
-- **RCPT TO**: Specifies the recipient's email address.
-- **DATA**: Indicates the start of the message content.
-- **QUIT**: Terminates the SMTP session.
-- **RSET**: Resets the current mail transaction.
-- **VRFY**: Verifies an email address.
-- **EXPN**: Expands a mailing list.
-- **HELP**: Provides help information.
+### **Key Concepts in SVM**
 
-#### SMTP Status Codes
-- **2xx**: Success (e.g., 250 OK)
-- **3xx**: Intermediate (e.g., 354 Start mail input)
-- **4xx**: Temporary Failure (e.g., 421 Service not available)
-- **5xx**: Permanent Failure (e.g., 550 Requested action not taken)
+| **Concept**               | **Description**                                                                                   |
+|----------------------------|---------------------------------------------------------------------------------------------------|
+| **Hyperplane**            | A decision boundary that separates different classes in the feature space.                       |
+| **Support Vectors**       | Data points closest to the hyperplane, influencing its position and orientation.                  |
+| **Margin**                | The distance between the hyperplane and the nearest data point of each class.                     |
+| **Kernel Function**       | A function that maps data to a higher-dimensional space, enabling linear separation in complex cases. |
 
-#### SMTP Ports
-- **Port 25**: Default port for SMTP communication.
-- **Port 587**: Used for email submission with encryption (STARTTLS).
-- **Port 465**: Used for SMTP over SSL (deprecated but still in use).
+---
 
-#### Security
-- **STARTTLS**: Upgrades an existing insecure connection to a secure connection using TLS.
-- **SMTP Authentication (SMTP AUTH)**: Requires the client to authenticate with the server before sending emails, preventing unauthorized use.
+### **Key Features**
 
-#### Use Cases
-- **Sending Emails**: SMTP is primarily used to send emails from a client to a server or between servers.
-- **Relaying Emails**: SMTP can relay emails between different email servers.
-- **Bulk Email Sending**: SMTP is used by bulk email services to send large volumes of emails.
+| **Feature**                  | **Description**                                                                                          |
+|-------------------------------|----------------------------------------------------------------------------------------------------------|
+| **Robustness to Outliers**   | Uses only support vectors, minimizing the influence of other data points.                               |
+| **Effective in High Dimensions** | Performs well even when the number of dimensions is larger than the number of samples.                |
+| **Versatility**              | Can be used for linear and non-linear problems using kernel tricks.                                      |
 
-#### Limitations
-- **No Built-in Encryption**: SMTP does not provide built-in encryption, making it susceptible to eavesdropping. Encryption is added using STARTTLS.
-- **Spam and Abuse**: SMTP can be exploited for sending spam emails if proper authentication and security measures are not in place.
+---
 
-#### Example SMTP Session
-```plaintext
-Client: HELO example.com
-Server: 250 Hello example.com
+### **Types of SVM**
+1. **Linear SVM**:  
+   Used when the data is linearly separable.  
+   Example: \( \mathbf{w}^T \mathbf{x} + b = 0 \) defines the hyperplane.
 
-Client: MAIL FROM:<sender@example.com>
-Server: 250 OK
+2. **Non-Linear SVM**:  
+   Applies kernel functions to handle non-linearly separable data by transforming it into a higher-dimensional space.
 
-Client: RCPT TO:<recipient@example.com>
-Server: 250 OK
+---
 
-Client: DATA
-Server: 354 Start mail input; end with <CRLF>.<CRLF>
+### **Mathematical Formulation**
 
-Client: Subject: Test Email
-Client: This is a test email.
-Client: .
+#### Objective Function (Hard Margin SVM):  
+$$
+\text{Minimize: } \frac{1}{2} \|\mathbf{w}\|^2
+$$  
+Subject to:  
+$$
+y_i (\mathbf{w}^T \mathbf{x}_i + b) \geq 1 \quad \forall i
+$$
 
+#### Soft Margin SVM (with Slack Variables \( \xi_i \)):  
+Allows misclassification by introducing a penalty.  
+$$
+\text{Minimize: } \frac{1}{2} \|\mathbf{w}\|^2 + C \sum_{i=1}^{n} \xi_i
+$$  
+Subject to:  
+$$
+y_i (\mathbf{w}^T \mathbf{x}_i + b) \geq 1 - \xi_i, \quad \xi_i \geq 0
+$$  
 
-Server
+Where:
+- \( \mathbf{w} \): Weight vector.  
+- \( C \): Regularization parameter balancing margin width and classification error.
 
-: 250 OK
+---
 
-Client: QUIT
-Server: 221 Bye
+### **Kernel Functions**
+| **Kernel**         | **Formula**                                                                                     | **Use Case**                                                                 |
+|---------------------|-----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| **Linear**         | \( K(x, y) = x^T y \)                                                                          | For linearly separable data.                                               |
+| **Polynomial**     | \( K(x, y) = (\gamma x^T y + r)^d \), \( \gamma > 0 \)                                         | For complex boundaries (non-linear problems).                              |
+| **Radial Basis Function (RBF)** | \( K(x, y) = \exp(-\gamma \|x-y\|^2) \), \( \gamma > 0 \)                            | For non-linear problems with unknown patterns.                             |
+| **Sigmoid**        | \( K(x, y) = \tanh(\gamma x^T y + r) \)                                                        | Used in neural networks (similarity measure).                              |
+
+---
+
+### **SVM Classification**
+
+1. **Input**: Training dataset \( (x_i, y_i) \), where \( y_i \in \{-1, 1\} \).  
+2. **Hyperplane Calculation**: Maximizes margin between classes.  
+3. **Decision Function**:
+   $$
+   f(x) = \text{sign}(\mathbf{w}^T \mathbf{x} + b)
+   $$
+
+---
+
+### **SVM Regression (SVR)**
+- Predicts continuous values.  
+- Uses a margin of tolerance \( \epsilon \) around the actual value.  
+- Objective: Minimize the error outside this margin.
+
+---
+
+### **Advantages**
+1. **Effective in High-Dimensional Spaces**: Works well with complex datasets.  
+2. **Kernel Trick**: Handles non-linear relationships efficiently.  
+3. **Robustness**: Less prone to overfitting due to regularization.
+
+### **Disadvantages**
+1. **Computationally Expensive**: High training time for large datasets.  
+2. **Requires Parameter Tuning**: Selection of kernel and \( C \) values is critical.  
+3. **Sensitive to Noise**: Outliers can significantly affect results.
+
+---
+
+### **Applications of SVM**
+| **Application**          | **Use Case**                                                                                       |
+|---------------------------|---------------------------------------------------------------------------------------------------|
+| **Text Classification**  | Spam detection, sentiment analysis.                                                              |
+| **Image Recognition**    | Facial recognition, object detection.                                                            |
+| **Bioinformatics**       | Classifying proteins, genes, and diseases.                                                       |
+| **Stock Market Analysis**| Predicting trends based on historical data.                                                      |
+| **Anomaly Detection**    | Identifying fraud or unusual patterns in datasets.                                               |
+
+---
+
+### **SVM Implementation (Python)**
+
+#### **1. Linear SVM**
+```python
+from sklearn.svm import SVC
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+
+# Generate sample data
+X, y = make_classification(n_samples=100, n_features=2, n_classes=2, random_state=42)
+
+# Split the data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Train an SVM
+svm = SVC(kernel='linear', C=1.0)
+svm.fit(X_train, y_train)
+
+# Predictions
+y_pred = svm.predict(X_test)
 ```
 
-#### Diagram
-```mermaid
-sequenceDiagram;
-    participant Client;
-    participant Server;
+#### **2. Non-Linear SVM (RBF Kernel)**
+```python
+svm = SVC(kernel='rbf', gamma=0.5, C=1.0)
+svm.fit(X_train, y_train)
 
-    Client->>Server: HELO example.com;
-    Server-->>Client: 250 Hello example.com;
-
-    Client->>Server: MAIL FROM:<sender@example.com>;
-    Server-->>Client: 250 OK;
-
-    Client->>Server: RCPT TO:<recipient@example.com>;
-    Server-->>Client: 250 OK;
-
-    Client->>Server: DATA;
-    Server-->>Client: 354 Start mail input and end with <CR><LF>.<CR><LF>;
-
-    Client->>Server: Subject: Test Email<br>This is a test email.<br>.;
-    Server-->>Client: 250 OK;
-
-    Client->>Server: QUIT;
-    Server-->>Client: 221 Bye;
+y_pred = svm.predict(X_test)
 ```
 
-This diagram illustrates the sequence of commands and responses in a typical SMTP session.
+---
+
+### **Tuning Parameters**
+
+| **Parameter**        | **Description**                                                                                   |
+|-----------------------|---------------------------------------------------------------------------------------------------|
+| **C (Regularization)**| Controls trade-off between achieving a large margin and minimizing classification error.          |
+| **Gamma (\( \gamma \))**| Defines the influence of a single training example (used in RBF and polynomial kernels).          |
+| **Kernel**            | Specifies the type of kernel function (linear, polynomial, RBF, etc.).                           |
+
+---
+
+### **Performance Metrics**
+| **Metric**            | **Description**                                                                                   |
+|------------------------|---------------------------------------------------------------------------------------------------|
+| **Accuracy**          | Proportion of correct predictions.                                                                |
+| **Precision**         | Correctly predicted positives out of all predicted positives.                                      |
+| **Recall**            | Correctly predicted positives out of all actual positives.                                         |
+| **F1-Score**          | Harmonic mean of precision and recall.                                                            |
+
+---
+
+### **SVM Summary Table**
+| **Aspect**           | **Details**                                                                                       |
+|-----------------------|---------------------------------------------------------------------------------------------------|
+| **Learning Type**    | Supervised.                                                                                       |
+| **Goal**             | Maximize margin between classes (classification) or predict values with a margin of error (regression). |
+| **Kernel Trick**     | Enables linear separability in higher-dimensional spaces.                                          |
+| **Advantages**       | Effective in high dimensions, versatile with kernels.                                             |
+| **Disadvantages**    | Computationally expensive, sensitive to parameter selection.                                       |
+| **Key Parameters**   | Kernel, \( C \), \( \gamma \).                                                                     |
